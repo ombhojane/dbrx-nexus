@@ -1,5 +1,4 @@
 import streamlit as st
-from itertools import tee
 import google.generativeai as genai
 import sqlite3
 
@@ -48,7 +47,18 @@ model = genai.GenerativeModel(model_name="gemini-1.0-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-st.title("DBRX Instruct")
+DESCRIPTION = """
+This app demonstrates how to use the DBRX Nexus AI to enhance customer experience by providing conversational responses to user queries. 
+The app uses the DBRX model to generate SQL queries based on user questions and then executes the queries to retrieve information from a database. 
+The retrieved information is then formatted into a conversational response and displayed to the user.
+
+This is DBRX Nexus AI powered chatbot for Electronics Store. You can ask questions about products, brands, storage, color, price, and much more!
+"""
+
+st.title("Enhancing Customer Experience with Nexus")
+
+st.markdown(DESCRIPTION)
+
 
 with open("style.css") as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
@@ -91,6 +101,17 @@ def format_response(user_input, query_results):
     print(formatted_response.text)
     return formatted_response.text
 
+EXAMPLES = [
+    "What colors do iPhones come in?",
+    "How much does the Samsung Galaxy cost?",
+    "Show me all products with more than 128GB of storage",
+    "List all products under $500"
+]
+with st.sidebar:
+    with st.container():
+        st.title("Example Queries")
+        for prompt in EXAMPLES:
+            st.button(prompt, on_click=lambda prompt=prompt: handle_user_input(prompt))
 
 def handle_user_input(user_input):
     with history:
