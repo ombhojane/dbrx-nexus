@@ -46,3 +46,7 @@ Start the application, and the Streamlit UI will be available in your web browse
 - Execute the query.
 - Format the response in a user-friendly way.
 
+## Live Demo
+
+- https://huggingface.co/spaces/ombhojane/dbrx-nexus
+- https://dbrx-nexus.streamlit.app/
